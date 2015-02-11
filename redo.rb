@@ -26,7 +26,6 @@ unless File.exist?(data_file)
 	f = File.new(data_file, 'w') 
 	files_in_root_dir = Dir.entries(root_dir).select {|f| f != '.' && f != '..' && !(f.include?('readminder'))}
 	CSV.open(data_file, "wb") do |csv|
-		csv << ['filename', 'readcount']
 	  files_in_root_dir.each {|file|
 	  	csv << [file, '0']
 	  }
@@ -34,13 +33,17 @@ unless File.exist?(data_file)
 	f.close
 end
 
-
 data = CSV.read(data_file)
 
-p data
-# if file not exist, create and populate
-# file.open, 
-# load data
+# p data
+random_pair = data[rand(data.size)]
+puts "random pair is: #{random_pair}"
+data.delete(random_pair)
+new_pair = [random_pair.first, random_pair.last.to_i + 1]
+data << new_pair
+
+puts data
+
 # pick random
 # write '1' to data structure
 # when 'o' pick and open next
