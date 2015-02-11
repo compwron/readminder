@@ -24,10 +24,9 @@ data_file = root_dir + "/.readminder"
 require 'csv'
 unless File.exist?(data_file)
 	f = File.new(data_file, 'w') 
-	puts "root dir: #{root_dir}"
 	files_in_root_dir = Dir.entries(root_dir).select {|f| f != '.' && f != '..' && !(f.include?('readminder'))}
-	puts "files_in_root_dir: #{files_in_root_dir}"
 	CSV.open(data_file, "wb") do |csv|
+		csv << ['filename', 'readcount']
 	  files_in_root_dir.each {|file|
 	  	csv << [file, '0']
 	  }
@@ -36,9 +35,9 @@ unless File.exist?(data_file)
 end
 
 
-CSV.foreach(data_file) {|row|
-	p row
-}
+data = CSV.read(data_file)
+
+p data
 # if file not exist, create and populate
 # file.open, 
 # load data
