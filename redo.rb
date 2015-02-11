@@ -24,7 +24,8 @@ data_file = root_dir + "/.readminder"
 require 'csv'
 unless File.exist?(data_file)
 	f = File.new(data_file, 'w') 
-	files_in_root_dir = Dir.glob(root_dir)
+	puts "root dir: #{root_dir}"
+	files_in_root_dir = Dir.entries(root_dir).select {|f| f != '.' && f != '..' && !(f.include?('readminder'))}
 	puts "files_in_root_dir: #{files_in_root_dir}"
 	CSV.open(data_file, "wb") do |csv|
 	  files_in_root_dir.each {|file|
